@@ -12,17 +12,18 @@ class ConversionServiceTest {
 
     private val frankfurterMockClient = Mockito.mock(FrankfurterRestClient::class.java)
     private val conversionService = ConversionService(frankfurterMockClient)
+    private val rates = RatesJson()
 
     @Test
     fun convertRateTest() {
-        Mockito.`when`(frankfurterMockClient.getRates()).thenReturn(RatesJson.rates)
+        Mockito.`when`(frankfurterMockClient.getRates()).thenReturn(rates.getRates())
         val result = conversionService.convertRate("Convert 10.0 USD to CZK")
         assertEquals("250.0", result)
     }
 
     @Test
     fun convertRateTestWrongParameters() {
-        Mockito.`when`(frankfurterMockClient.getRates()).thenReturn(RatesJson.rates)
+        Mockito.`when`(frankfurterMockClient.getRates()).thenReturn(rates.getRates())
         assertThrows<ResponseStatusException> {
             conversionService.convertRate("Convert 10 USD to CZF")
         }
@@ -30,7 +31,7 @@ class ConversionServiceTest {
 
     @Test
     fun convertRateTestWrongParameterType() {
-        Mockito.`when`(frankfurterMockClient.getRates()).thenReturn(RatesJson.rates)
+        Mockito.`when`(frankfurterMockClient.getRates()).thenReturn(rates.getRates())
         assertThrows<ResponseStatusException> {
             conversionService.convertRate("Convert 10.0.0 USD to CZF")
         }

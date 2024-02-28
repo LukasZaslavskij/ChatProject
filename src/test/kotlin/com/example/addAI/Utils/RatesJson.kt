@@ -1,7 +1,9 @@
 package com.example.addAI.Utils
 
-object RatesJson {
-    val rates = """
+class RatesJson {
+
+    fun getRates(): String {
+        return """
         {
             "amount": 1.0,
             "base": "EUR",
@@ -40,4 +42,5 @@ object RatesJson {
             }
         }
     """.trimIndent()
+    }
 }
